@@ -10,6 +10,8 @@ namespace OgrenciServis.Models
 {
     public class Ogretmen
     {
+        public string Sube;
+
         [Key]
         [Column(name: "ogretmen_id")]
         public int OgretmenId { get; set; }
