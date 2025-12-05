@@ -10,6 +10,8 @@ namespace OgrenciServis.Models
 {
     public class Sinav
     {
+        public object OgrenciId;
+
         [Key]
         [Column(name:"sinav_id")]
         public int SinavId { get; set; }

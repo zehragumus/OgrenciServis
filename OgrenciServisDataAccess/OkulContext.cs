@@ -23,6 +23,7 @@ namespace OgrenciServis.DataAccess
         public DbSet<Ogretmen> Ogretmenler { get; set; }
         public DbSet<Sinif> Siniflar { get; set; }
         public DbSet<Sinav> Sinavlar { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -56,6 +57,12 @@ namespace OgrenciServis.DataAccess
                 entity.ToTable("siniflar", "public");
 
                 entity.HasKey(e => e.SinifId).HasName("sinifler_pk");
+            });
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.ToTable("users", "public");
+
+                entity.HasKey(e => e.UserId).HasName("users_pk");
             });
 
             base.OnModelCreating(modelBuilder);
