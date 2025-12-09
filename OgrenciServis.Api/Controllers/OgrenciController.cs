@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using OgrenciServis.Logic.Interface;
 using OgrenciServis.Models;
 using OgrenciServis.Models.DTO;
+using OgrenciServis.Models.Exceptions;
 using System.Runtime.CompilerServices;
 
 namespace OgrenciServis.Api.Controllers
@@ -28,16 +30,35 @@ namespace OgrenciServis.Api.Controllers
 
         // Get: api
         [HttpGet("{id}")]
+        [AllowAnonymous]
 
         public ActionResult<OgrenciDto> GetOgrenci(int id)
 
         {
-            var ogrenciDto = this.ogrenci.OgrenciGetirById(id);
-            if (ogrenciDto == null)
+            try
             {
-                return NotFound($"Öğrenci ID {id} bulunamadı");
+                var ogrenciDto = this.ogrenci.OgrenciGetirById(id);
+                return Ok(ogrenciDto);
+
             }
-            return Ok(ogrenciDto);
+            catch (NotFoundException ex)
+            { 
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+
+               // return StatusCode(500, "Bilinmeyen bir hata oluştu" + ex.Message) ;
+                return StatusCode(500, $"Bilinmeyen bir hata oluştu { ex.Message} {id}") ;
+
+
+            }
+
+
+
+
+
+
         }
 
 
